@@ -1,6 +1,6 @@
-# esmodules-boilerplate
+# firebase-boilerplate
 
-A template for creating modules in accordance with the es modules design pattern
+A template for creating google firebase cross platform applications
 
 ## Getting Started
 
@@ -22,14 +22,50 @@ git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY
 npm install
 ```
 
-4. Run Gulp task runner
+4. Create firebase project (application container) on online account
+
+5. Configure firebase project
+
+```
+setup real time database || firestore in native mode
+```
+
+6. Install firebase
+
+```
+npm i firebase --save
+```
+
+7. Login to firebase from command line
+
+```
+firebase login
+```
+
+8. Initialise firebase project
+
+```
+firebase init
+```
+
+9. Ready to start development
+
+## Deploy
+
+1. Run Gulp task runner to lint and compile application
 
 ```
 gulp
 ```
 
-5. Sample module can now be accessed on localhost
+2. Test on localhost
 
 ```
-http://localhost/
+firebase serve
+```
+
+3. Deploy application to cloud
+
+```
+firebase deploy
 ```

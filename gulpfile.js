@@ -1,21 +1,20 @@
- /*!
-  * Gulp ES Modules Task Runner File
-  * (c) 2020 Joshua Adams
-  */
+/*!
+ * Gulp CommonJS Task Runner File
+ * (c) 2020 Joshua Adams
+ */
 
 'use strict';
 
 /* ============================== Import Modules ============================ */
 
 const gulp = require('gulp');
+const eslint = require('gulp-eslint');
 const sass = require('gulp-sass');
 const minCss = require('gulp-minify-css');
 const concat = require('gulp-concat');
 const webpack = require('webpack-stream');
 const rename = require('gulp-rename');
-const eslint = require('gulp-eslint');
 const stylelint = require('gulp-stylelint');
-const express = require('./test/express/express.js');
 
 /* ============================= Configure Modules ========================== */
 
@@ -35,7 +34,7 @@ const settings = {
 			// property descriptions define the name that will be exported to compiled
 			// js code
 			"some-module-1": "someModule1",
-		 "./dist/some-module-2.js": "someModule2"
+		 "./public/some-module-2.js": "someModule2"
 	  }
 		// list of dependancies to ADD to the compiled css files
 		, css: []   // 'dep1_location/dep1.css', 'etc.'
@@ -45,11 +44,11 @@ const settings = {
 
 const paths = {
 	inputs: {
-		index: "./src/js/module.js"
-		, js: ["./src/js/**/*.js"]
-		, sass: ["./src/sass/**/*.scss"]
+		index: "./src/browser/js/module.js"
+		, js: ["./src/**/*.js"]
+		, sass: ["./src/**/*.scss"]
 	}
-	, outputs: "dist/"
+	, outputs: "public/"
 }
 
 /* ================================== Methods =============================== */
@@ -63,7 +62,7 @@ function getWebpackCnf (name) {
 	  output: {
 	    filename: "[name].js",
 			libraryTarget: 'var',
-      library: pkg.name.replace('-', ''),
+      library: pkg.name.split('-').join(""),
 	  },
 		externals: {},
 	  optimization: {
@@ -93,7 +92,7 @@ function getWebpackCnf (name) {
 function compileJs (entry, cnf, done) {
   return gulp.src(entry)
     .pipe(webpack(cnf).on('error', function (err) { console.log(err); done(); }))
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('public/'));
 }
 
 function compileScss (arr, name) {
@@ -172,7 +171,7 @@ gulp.task('js-with-dep', function (done) {
 			cnf = getWebpackCnf(pkg.name + ".full");
 	cnf.externals = {
 		"some-module-1": "someModule1",
-		"./dist/some-module-2.js": "someModule2"
+		"./public/some-module-2.js": "someModule2"
 	};
   return compileJs(entry, cnf, done);
 })
@@ -182,7 +181,7 @@ gulp.task('js-min-with-dep', function (done) {
 			cnf = getWebpackCnf(pkg.name + ".full.min");
 	cnf.externals = {
 		"some-module-1": "someModule1",
-		"./dist/some-module-2.js": "someModule2"
+		"./public/some-module-2.js": "someModule2"
 	};
 	cnf.optimization = { minimize: true };
   return compileJs(entry, cnf, done);
@@ -197,7 +196,7 @@ gulp.task('css-no-dep', function (done) {
 gulp.task('css-with-dep', function (done) {
   var name = pkg.name + '.full.css'
       , arr = [
-        './dist/' + pkg.name + '.css'
+        './public/' + pkg.name + '.css'
       ];
   return appendCssDependacies(settings.dependancies.css.concat(arr), name);
 });
@@ -219,7 +218,6 @@ gulp.task('sasslint', function (done) {
  */
 
  exports.default = function () {
-	 express.init();
-   gulp.watch(paths.inputs.sass, gulp.series('sasslint', 'css-no-dep', 'css-with-dep'));
+	 gulp.watch(paths.inputs.sass, gulp.series('sasslint', 'css-no-dep', 'css-with-dep'));
    gulp.watch(paths.inputs.js, gulp.series('jslint', 'js-no-dep', 'js-min-no-dep', 'js-with-dep', 'js-min-with-dep'));
  };
