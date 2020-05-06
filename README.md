@@ -48,7 +48,31 @@ firebase login
 firebase init
 ```
 
-9. Ready to start development
+9. Configure CI/CD
+
+    1. Get firebase token
+    
+    ```
+    firebase login:ci
+    ```
+    
+    2. Add FIREBASE_TOKEN to git repository 
+
+    ```
+    Github repo setting -> Secrets
+    ```
+
+    3. Automatic deployments will now occur on commits to master branch
+
+10. Ready to start development
+
+## Test
+
+1. Test on localhost
+
+```
+firebase serve
+```
 
 ## Deploy
 
@@ -58,14 +82,10 @@ firebase init
 gulp
 ```
 
-2. Test on localhost
+2. Run CI/CD process
 
 ```
-firebase serve
+git push <REMOTENAME> master 
 ```
 
-3. Deploy application to cloud
-
-```
-firebase deploy
-```
+3. Review CI/CD outputs in GitHub actions

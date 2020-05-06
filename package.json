@@ -4,7 +4,7 @@
   "description": "A template for creating modules in accordance with the es modules design pattern",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Info: no test specified\" && exit 0"
   },
   "repository": {
     "type": "git",
