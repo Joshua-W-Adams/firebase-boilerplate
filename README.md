@@ -8,19 +8,13 @@ A template for creating new google firebase projects
 
 1. Clone repo
 
-2. Install dependencies
-
-```
-npm install
-```
-
-3. Login to firebase
+2. Login to firebase
 
 ```
 firebase login
 ```
 
-4. Initialise firebase project
+3. Initialise firebase project
 
 ```
 firebase init
