@@ -4,17 +4,35 @@ A template for creating new google firebase projects
 
 ## Getting Started
 
-### Setting up Firebase Project
+### Create new Project
 
 1. Clone repo
 
-2. Login to firebase
+2. Initialise project with command line tool or other. E.g.
+
+    Create a react application using Facebooks starter boilerplate
+
+    ```
+    npx create-react-app --template typescript
+    ```
+
+    OR Create Flutter application
+
+    ```
+    flutter create my_app
+    ```
+
+### Setting up Firebase Project
+
+Note: Firebase project should be setup after configuring the initial project to avoid conflicts project starter tools like npx create-react-app.
+
+1. Login to firebase
 
 ```
 firebase login
 ```
 
-3. Initialise firebase project
+2. Initialise firebase project
 
 ```
 firebase init
